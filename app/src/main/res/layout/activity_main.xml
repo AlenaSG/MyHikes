@@ -10,7 +10,10 @@
         android:layout_height="match_parent"
         android:id="@+id/imageView"
         android:src="@drawable/background"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -45,5 +48,16 @@
         android:layout_marginBottom="10dp"
         android:padding="5dp"
         android:hint="Enter Zip Code"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/hikesButton"
+        android:background="@color/colorAccent"
+        android:textColor="@color/colorTextIcons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:text="Type Of Hike"
+        android:layout_below="@+id/appNameTextView"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -19,17 +20,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Bind(R.id.findHikesButton) Button mFindHikesButton;
     @Bind(R.id.locationEditText) EditText mLocationEditText;
     @Bind(R.id.appNameTextView) TextView mAppNameTextView;
+    @Bind(R.id.hikesButton) Button mHikesButton;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        FragmentManager fm = getFragmentManager();
-        HikeDialog hikeDialog = new HikeDialog();
-        hikeDialog.show(fm, "Sample Fragment");
+        mHikesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fm = getFragmentManager();
+                HikeDialog hikeDialog = new HikeDialog();
+                hikeDialog.show(fm, "Sample Fragment");
+            }
+
+        });
+
+
 
 
         Typeface amaticboldFont = Typeface.createFromAsset(getAssets(), "fonts/amaticbold.ttf");
