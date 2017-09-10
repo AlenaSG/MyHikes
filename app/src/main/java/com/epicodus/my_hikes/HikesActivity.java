@@ -10,24 +10,29 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 public class HikesActivity extends AppCompatActivity {
-    private TextView mLocationTextView;
-    private ListView mListView;
+    @Bind(R.id.locationTextView) TextView mLocationTextView;
+    @Bind(R.id.listView) ListView mListView;
+
     private String[] hikes = new String[] {"RattleSnake Ledge", "Tenerife Falls",
             "Wallace Falls", "Lake Serene", "Bridal Veil Falls", "Franklin Falls",
             "Twin Falls", "Boulder River", "Murhut Falls", "Marymere Falls",
             "Carter Falls", "Myrtle Falls,", "Snoqualmie Falls",
             "Bagley Lakes Loop", "Mirror Lake"};
+    private String[] difficulties = new String[] {"Moderate", "Easy", "Strenuous",
+            "Easy", "Easy", "Strenuous", "Moderate", "Easy", "Easy",
+            "Moderate", "Strenuous", "Strenuous", "Moderate", "Easy", "Moderate", "Moderate" };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hikes);
+        ButterKnife.bind(this);
 
-        mListView = (ListView) findViewById(R.id.listView);
-        mLocationTextView = (TextView) findViewById(R.id.locationTextView);
-
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, hikes);
+        MyHikesArrayAdapter adapter = new MyHikesArrayAdapter(this, android.R.layout.simple_list_item_1, hikes, difficulties);
         mListView.setAdapter(adapter);
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
