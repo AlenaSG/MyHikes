@@ -47,7 +47,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
         android:background="@color/colorTextIcons"
-        android:hint="Enter City Name"
+        android:hint="Enter City in WA"
         android:inputType="textCapWords"
         android:padding="5dp" />
 

@@ -3,6 +3,8 @@ package com.epicodus.my_hikes;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,7 +26,8 @@ public class HikesActivity extends AppCompatActivity {
     public static final String TAG = HikesActivity.class.getSimpleName();
 
     @Bind(R.id.locationTextView) TextView mLocationTextView;
-    @Bind(R.id.listView) ListView mListView;
+    @Bind(R.id.recyclerView) RecyclerView mRecyclerView;
+    private HikeListAdapter mAdapter;
 
     public ArrayList<Hike> mHikes = new ArrayList<>();
 
@@ -59,19 +62,12 @@ public class HikesActivity extends AppCompatActivity {
                 HikesActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-
-                        String[] hikeNames = new String[mHikes.size()];
-                        for (int i = 0; i < hikeNames.length; i++) {
-                            hikeNames[i] = mHikes.get(i).getName();
-                        }
-
-                        ArrayAdapter adapter = new ArrayAdapter(HikesActivity.this,
-                                android.R.layout.simple_list_item_1, hikeNames);
-                        mListView.setAdapter(adapter);
-
-                        for (Hike hike : mHikes) {
-                            Log.d(TAG, "Name: " + hike.getName());
-                        }
+                        mAdapter = new HikeListAdapter(getApplicationContext(), mHikes);
+                        mRecyclerView.setAdapter(mAdapter);
+                        RecyclerView.LayoutManager layoutManager =
+                                new LinearLayoutManager(HikesActivity.this);
+                        mRecyclerView.setLayoutManager(layoutManager);
+                        mRecyclerView.setHasFixedSize(true);
                     }
                 });
             }
@@ -79,21 +75,3 @@ public class HikesActivity extends AppCompatActivity {
     }
 }
 
-
-//        MyHikesArrayAdapter adapter = new MyHikesArrayAdapter(this, android.R.layout.simple_list_item_1, hikes, difficulties);
-//        mListView.setAdapter(adapter);
-//
-//        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                String hike = ((TextView)view).getText().toString();
-//                Toast.makeText(HikesActivity.this, hike, Toast.LENGTH_LONG).show();
-//            }
-//        });
-
-
-
-//    }
-//
-//
-//}
