@@ -17,6 +17,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+    public static final String TAG = MainActivity.class.getSimpleName();
+
     @Bind(R.id.findHikesButton) Button mFindHikesButton;
     @Bind(R.id.locationEditText) EditText mLocationEditText;
     @Bind(R.id.appNameTextView) TextView mAppNameTextView;
@@ -49,12 +51,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mFindHikesButton.setOnClickListener(this);
     }
 
+    private static boolean isCityNameValid(String city) {
+        if (city == null) {
+            return false;
+        }
+        if (city.isEmpty()) {
+            return false;
+        }
+        if (city.matches("[ a-zA-Z]+")) {
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public void onClick(View v) {
         if(v == mFindHikesButton) {
-            String location = mLocationEditText.getText().toString();
+            String city = mLocationEditText.getText().toString();
+            if (!isCityNameValid(city)) {
+                Log.v(TAG, "Invalid city: " + city);
+                Toast.makeText(this, "Invalid City Name", Toast.LENGTH_LONG).show();
+                return;
+            }
+            Log.v(TAG, "Entered city: " + city);
             Intent intent = new Intent(MainActivity.this, HikesActivity.class);
-            intent.putExtra("location", location);
+            intent.putExtra("city", city);
             startActivity(intent);
         }
     }
