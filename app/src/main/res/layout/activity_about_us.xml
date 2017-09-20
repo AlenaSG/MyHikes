@@ -9,7 +9,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Please contact us if you have questions and suggestions."
+        android:text="This app lets you track hikes in Washington State. Input a city in WA and see a list of hikes nearby. \n\n\n
+        Please contact us if you have questions and suggestions."
         android:id="@+id/textView" />
 
     <TextView
@@ -17,11 +18,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="support@myhikes.com"
-        android:layout_marginTop="16dp"
+        android:autoLink="email"
+        android:layout_marginTop="18dp"
+        android:layout_marginLeft="99dp"
+        android:layout_marginStart="99dp"
         android:layout_below="@+id/textView"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="99dp"
-        android:layout_marginStart="99dp" />
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

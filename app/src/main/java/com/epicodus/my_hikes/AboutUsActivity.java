@@ -11,7 +11,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class AboutUsActivity extends AppCompatActivity implements View.OnClickListener {
-    @Bind(R.id.mailTextView) TextView mMailTextView;
+    @Bind(R.id.mailTextView)
+    TextView mMailTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,5 +27,10 @@ public class AboutUsActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View v) {
         Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
         emailIntent.setData(Uri.parse("mailto:support@myhikes.com"));
+        if (emailIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(emailIntent);
         }
     }
+
+}
+
