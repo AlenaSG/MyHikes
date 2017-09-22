@@ -22,7 +22,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Bind(R.id.findHikesButton) Button mFindHikesButton;
     @Bind(R.id.locationEditText) EditText mLocationEditText;
     @Bind(R.id.appNameTextView) TextView mAppNameTextView;
-    @Bind(R.id.hikesButton) Button mHikesButton;
 
     @Bind(R.id.aboutButton) Button mAboutButton;
 
@@ -33,15 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        mHikesButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager fm = getFragmentManager();
-                HikeDialog hikeDialog = new HikeDialog();
-                hikeDialog.show(fm, "Sample Fragment");
-            }
 
-        });
 
 
         mAboutButton.setOnClickListener(new View.OnClickListener() {

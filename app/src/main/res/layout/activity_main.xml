@@ -52,17 +52,6 @@
         android:padding="5dp" />
 
     <Button
-        android:id="@+id/hikesButton"
-        android:background="@color/colorAccent"
-        android:textColor="@color/colorTextIcons"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:text="Type Of Hike"
-        android:layout_below="@+id/appNameTextView"
-        android:layout_centerHorizontal="true" />
-
-    <Button
         android:id="@+id/aboutButton"
         android:background="@color/colorAccent"
         android:textColor="@color/colorTextIcons"

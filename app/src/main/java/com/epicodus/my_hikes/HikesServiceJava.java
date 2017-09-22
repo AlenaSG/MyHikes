@@ -70,7 +70,7 @@ public class HikesServiceJava {
                         activities.add(new Activity(description, url, length));
                     }
 
-                    Hike hike = new Hike(name, directions, activities, lat, lon);
+                    Hike hike = new Hike(name, directions);
                     hikes.add(hike);
                 }
             }

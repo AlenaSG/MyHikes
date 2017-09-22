@@ -23,9 +23,10 @@
         <activity android:name=".HikesActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.epicodus.my_hikes.MainActivity"></meta-data>
+                android:value="com.epicodus.my_hikes.MainActivity" />
         </activity>
-        <activity android:name=".AboutUsActivity"></activity>
+        <activity android:name=".AboutUsActivity" />
+        <activity android:name=".HikeDetailActivity"></activity>
     </application>
 
 </manifest>
