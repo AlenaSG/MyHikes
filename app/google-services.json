@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "717849871220",
+    "firebase_url": "https://myhikes-cc57f.firebaseio.com",
+    "project_id": "myhikes-cc57f",
+    "storage_bucket": "myhikes-cc57f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:717849871220:android:c3319e50487fb1bf",
+        "android_client_info": {
+          "package_name": "com.epicodus.my_hikes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "717849871220-6dcs2c1rb3nn7s9qge8cv336pjmsgbkq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.epicodus.my_hikes",
+            "certificate_hash": "56eb7227518ccaa71cd4e30999684b013e7b51ca"
+          }
+        },
+        {
+          "client_id": "717849871220-0hsvqh0ffbou16905vh4aqh1pp8gpjor.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLhJwDLal_DSQ9TrkGRMeEz6u202BsEKA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "717849871220-0hsvqh0ffbou16905vh4aqh1pp8gpjor.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -75,13 +75,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         if(v == mFindHikesButton) {
             String city = mLocationEditText.getText().toString();
-            addToSharedPreferences(city);
-            if (!isCityNameValid(city)) {
-                Log.v(TAG, "Invalid city: " + city);
-                Toast.makeText(this, "Invalid City Name", Toast.LENGTH_LONG).show();
-                return;
+            if(!(city).equals("")) {
+                addToSharedPreferences(city);
             }
-            Log.v(TAG, "Entered city: " + city);
             Intent intent = new Intent(MainActivity.this, HikesActivity.class);
             intent.putExtra("city", city);
             startActivity(intent);
