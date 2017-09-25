@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private ValueEventListener mSearchedCityReferenceListener;
 
+    @Bind(R.id.savedHikesButton) Button mSavedHikesButton;
     @Bind(R.id.findHikesButton) Button mFindHikesButton;
     @Bind(R.id.locationEditText) EditText mLocationEditText;
     @Bind(R.id.appNameTextView) TextView mAppNameTextView;
@@ -77,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        mEditor = mSharedPreferences.edit();
 
         mFindHikesButton.setOnClickListener(this);
+        mSavedHikesButton.setOnClickListener(this);
 
         mAboutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,6 +105,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        if (v == mSavedHikesButton) {
+            Intent intent = new Intent(MainActivity.this, SavedHikeListActivity.class);
+            startActivity(intent);
+        }
         if(v == mFindHikesButton) {
             String city = mLocationEditText.getText().toString();
 

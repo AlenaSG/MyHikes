@@ -26,7 +26,8 @@
                 android:value="com.epicodus.my_hikes.MainActivity" />
         </activity>
         <activity android:name=".AboutUsActivity" />
-        <activity android:name=".HikeDetailActivity"></activity>
+        <activity android:name=".HikeDetailActivity" />
+        <activity android:name=".SavedHikeListActivity"></activity>
     </application>
 
 </manifest>
