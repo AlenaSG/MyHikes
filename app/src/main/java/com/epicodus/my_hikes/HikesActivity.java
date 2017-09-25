@@ -1,6 +1,8 @@
 package com.epicodus.my_hikes;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,6 +27,9 @@ import okhttp3.Response;
 public class HikesActivity extends AppCompatActivity {
     public static final String TAG = HikesActivity.class.getSimpleName();
 
+    private SharedPreferences mSharedPreferences;
+    private String mRecentCity;
+
     @Bind(R.id.locationTextView) TextView mLocationTextView;
     @Bind(R.id.recyclerView) RecyclerView mRecyclerView;
     private HikeListAdapter mAdapter;
@@ -43,7 +48,16 @@ public class HikesActivity extends AppCompatActivity {
         mLocationTextView.setText("Here are all the hikes near: " + city);
 
         getHikes(city);
+
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mRecentCity = mSharedPreferences.getString(Constants.PREFERENCES_CITY_KEY, null);
+        Log.d("Shared Pref City", mRecentCity);
+        if (mRecentCity != null) {
+            getHikes(mRecentCity);
+        }
     }
+
+
 
     private void getHikes(String city) {
         final HikesServiceJava hikesService = new HikesServiceJava();

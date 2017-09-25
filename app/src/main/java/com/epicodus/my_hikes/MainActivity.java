@@ -2,7 +2,9 @@ package com.epicodus.my_hikes;
 
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +21,10 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     public static final String TAG = MainActivity.class.getSimpleName();
 
+    private SharedPreferences mSharedPreferences;
+    private SharedPreferences.Editor mEditor;
+
+
     @Bind(R.id.findHikesButton) Button mFindHikesButton;
     @Bind(R.id.locationEditText) EditText mLocationEditText;
     @Bind(R.id.appNameTextView) TextView mAppNameTextView;
@@ -27,11 +33,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mEditor = mSharedPreferences.edit();
 
 
 
@@ -67,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         if(v == mFindHikesButton) {
             String city = mLocationEditText.getText().toString();
+            addToSharedPreferences(city);
             if (!isCityNameValid(city)) {
                 Log.v(TAG, "Invalid city: " + city);
                 Toast.makeText(this, "Invalid City Name", Toast.LENGTH_LONG).show();
@@ -77,5 +86,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             intent.putExtra("city", city);
             startActivity(intent);
         }
+    }
+
+    private void addToSharedPreferences(String city) {
+        mEditor.putString(Constants.PREFERENCES_CITY_KEY, city).apply();
     }
 }
