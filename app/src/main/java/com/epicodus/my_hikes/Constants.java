@@ -7,5 +7,6 @@ public class Constants {
     public static final String HIKES_CITY_QUERY_PARAMETER = "city";
     public static final String PREFERENCES_CITY_KEY = "city";
     public static final String FIREBASE_CHILD_SEARCHED_CITY = "searchedCity";
+    public static final String FIREBASE_CHILD_HIKES = "hikes";
 }
 

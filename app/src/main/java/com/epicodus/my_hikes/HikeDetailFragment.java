@@ -8,6 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.parceler.Parcels;
 
@@ -18,7 +22,7 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HikeDetailFragment extends Fragment {
+public class HikeDetailFragment extends Fragment implements View.OnClickListener {
     @Bind(R.id.saveHikeButton) Button mSaveHikeButton;
     @Bind(R.id.hikeNameTextView) TextView mHikeNameTextView;
     @Bind(R.id.directionsTextView) TextView mDirectionsTextView;
@@ -48,7 +52,20 @@ public class HikeDetailFragment extends Fragment {
         mHikeNameTextView.setText(mHike.getName());
         mDirectionsTextView.setText(mHike.getDirections());
 
+        mSaveHikeButton.setOnClickListener(this);
+
         return view;
     }
 
+    @Override
+    public void onClick(View v) {
+
+        if (v == mSaveHikeButton) {
+            DatabaseReference restaurantRef = FirebaseDatabase
+                    .getInstance()
+                    .getReference(Constants.FIREBASE_CHILD_HIKES);
+            restaurantRef.push().setValue(mHike);
+            Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
+        }
+    }
 }
