@@ -15,8 +15,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -43,7 +46,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mSearchedCityReference = FirebaseDatabase
                 .getInstance()
                 .getReference()
-                .child(Constants.FIREBASE_CHILD_SEARCHED_CITY);
+                .child(Constants.FIREBASE_CHILD_SEARCHED_CITY);//pinpoint city node
+
+        mSearchedCityReference.addValueEventListener(new ValueEventListener() { //attach listener
+
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) { //something changed!
+                for (DataSnapshot citySnapshot : dataSnapshot.getChildren()) {
+                    String city = citySnapshot.getValue().toString();
+                    Log.d("Locations updated", "city: " + city); //log
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) { //update UI here if error occurred.
+
+            }
+        });
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -97,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void saveCityToFirebase(String city) {
-        mSearchedCityReference.setValue(city);
+        mSearchedCityReference.push().setValue(city);
     }
 
 //    private void addToSharedPreferences(String city) {

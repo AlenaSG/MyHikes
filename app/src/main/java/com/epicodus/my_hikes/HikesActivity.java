@@ -25,12 +25,12 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 public class HikesActivity extends AppCompatActivity {
-    public static final String TAG = HikesActivity.class.getSimpleName();
+    //public static final String TAG = HikesActivity.class.getSimpleName();
 
-    private SharedPreferences mSharedPreferences;
-    private String mRecentCity;
+//    private SharedPreferences mSharedPreferences;
+//    private String mRecentCity;
 
-    @Bind(R.id.locationTextView) TextView mLocationTextView;
+    //@Bind(R.id.locationTextView) TextView mLocationTextView;
     @Bind(R.id.recyclerView) RecyclerView mRecyclerView;
     private HikeListAdapter mAdapter;
 
@@ -45,16 +45,16 @@ public class HikesActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String city = intent.getStringExtra("city");
 
-        mLocationTextView.setText("Here are all the hikes near: " + city);
+        //mLocationTextView.setText("Here are all the hikes near: " + city);
 
         getHikes(city);
 
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        mRecentCity = mSharedPreferences.getString(Constants.PREFERENCES_CITY_KEY, null);
-        Log.d("Shared Pref City", mRecentCity);
-        if (mRecentCity != null) {
-            getHikes(mRecentCity);
-        }
+//        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+//        mRecentCity = mSharedPreferences.getString(Constants.PREFERENCES_CITY_KEY, null);
+//        Log.d("Shared Pref City", mRecentCity);
+//        if (mRecentCity != null) {
+//            getHikes(mRecentCity);
+//        }
     }
 
 
