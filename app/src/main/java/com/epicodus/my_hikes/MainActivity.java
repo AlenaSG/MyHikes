@@ -30,8 +30,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //    private SharedPreferences mSharedPreferences;
 //    private SharedPreferences.Editor mEditor;
 
-
     private DatabaseReference mSearchedCityReference;
+
+    private ValueEventListener mSearchedCityReferenceListener;
 
     @Bind(R.id.findHikesButton) Button mFindHikesButton;
     @Bind(R.id.locationEditText) EditText mLocationEditText;
@@ -48,14 +49,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .getReference()
                 .child(Constants.FIREBASE_CHILD_SEARCHED_CITY);//pinpoint city node
 
-        mSearchedCityReference.addValueEventListener(new ValueEventListener() { //attach listener
 
-
+            mSearchedCityReferenceListener = mSearchedCityReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) { //something changed!
                 for (DataSnapshot citySnapshot : dataSnapshot.getChildren()) {
                     String city = citySnapshot.getValue().toString();
-                    Log.d("Locations updated", "city: " + city); //log
+                    Log.d("Cities updated", "city: " + city); //log
                 }
             }
 
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }//end of onCreate
 
-    private static boolean isCityNameValid(String city) {
+    private static boolean isCityNameValid(String city) {//form validation
         if (city == null) {
             return false;
         }
@@ -118,6 +118,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void saveCityToFirebase(String city) {
         mSearchedCityReference.push().setValue(city);
+    }
+
+    @Override//for activity, not listener, not nested within addValue block
+    protected void onDestroy() {
+        super.onDestroy();
+        mSearchedCityReference.removeEventListener(mSearchedCityReferenceListener);
     }
 
 //    private void addToSharedPreferences(String city) {
