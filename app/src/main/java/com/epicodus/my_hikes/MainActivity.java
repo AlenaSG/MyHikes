@@ -15,15 +15,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-    public static final String TAG = MainActivity.class.getSimpleName();
+   // public static final String TAG = MainActivity.class.getSimpleName();
 
-    private SharedPreferences mSharedPreferences;
-    private SharedPreferences.Editor mEditor;
+//    private SharedPreferences mSharedPreferences;
+//    private SharedPreferences.Editor mEditor;
 
+
+    private DatabaseReference mSearchedCityReference;
 
     @Bind(R.id.findHikesButton) Button mFindHikesButton;
     @Bind(R.id.locationEditText) EditText mLocationEditText;
@@ -34,14 +39,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        mSearchedCityReference = FirebaseDatabase
+                .getInstance()
+                .getReference()
+                .child(Constants.FIREBASE_CHILD_SEARCHED_CITY);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        mEditor = mSharedPreferences.edit();
+        Typeface amaticboldFont = Typeface.createFromAsset(getAssets(), "fonts/amaticbold.ttf");
+        mAppNameTextView.setTypeface(amaticboldFont);
 
 
+//        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+//        mEditor = mSharedPreferences.edit();
+
+        mFindHikesButton.setOnClickListener(this);
 
         mAboutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,12 +66,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-
-        Typeface amaticboldFont = Typeface.createFromAsset(getAssets(), "fonts/amaticbold.ttf");
-        mAppNameTextView.setTypeface(amaticboldFont);
-
-        mFindHikesButton.setOnClickListener(this);
-    }
+    }//end of onCreate
 
     private static boolean isCityNameValid(String city) {
         if (city == null) {
@@ -75,16 +85,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         if(v == mFindHikesButton) {
             String city = mLocationEditText.getText().toString();
-            if(!(city).equals("")) {
-                addToSharedPreferences(city);
-            }
+
+            saveCityToFirebase(city);
+//            if(!(city).equals("")) {
+//                addToSharedPreferences(city);
+//            }
             Intent intent = new Intent(MainActivity.this, HikesActivity.class);
             intent.putExtra("city", city);
             startActivity(intent);
         }
     }
 
-    private void addToSharedPreferences(String city) {
-        mEditor.putString(Constants.PREFERENCES_CITY_KEY, city).apply();
+    public void saveCityToFirebase(String city) {
+        mSearchedCityReference.setValue(city);
     }
+
+//    private void addToSharedPreferences(String city) {
+//        mEditor.putString(Constants.PREFERENCES_CITY_KEY, city).apply();
+//    }
 }
