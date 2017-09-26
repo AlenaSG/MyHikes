@@ -3,17 +3,16 @@ package com.epicodus.my_hikes;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,11 +23,12 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class HikesActivity extends AppCompatActivity {
-    //public static final String TAG = HikesActivity.class.getSimpleName();
+public class HikeListActivity extends AppCompatActivity {
+    //public static final String TAG = HikeListActivity.class.getSimpleName();
 
-//    private SharedPreferences mSharedPreferences;
-//    private String mRecentCity;
+    private SharedPreferences mSharedPreferences;
+    private SharedPreferences.Editor mEditor;
+    private String mRecentCity;
 
     //@Bind(R.id.locationTextView) TextView mLocationTextView;
     @Bind(R.id.recyclerView) RecyclerView mRecyclerView;
@@ -49,14 +49,50 @@ public class HikesActivity extends AppCompatActivity {
 
         getHikes(city);
 
-//        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-//        mRecentCity = mSharedPreferences.getString(Constants.PREFERENCES_CITY_KEY, null);
-//        Log.d("Shared Pref City", mRecentCity);
-//        if (mRecentCity != null) {
-//            getHikes(mRecentCity);
-//        }
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mRecentCity = mSharedPreferences.getString(Constants.PREFERENCES_CITY_KEY, null);
+
+        if (mRecentCity != null) {
+            getHikes(mRecentCity);
+        }
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_search, menu);
+        ButterKnife.bind(this);
+
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mEditor = mSharedPreferences.edit();
+
+        MenuItem menuItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                addToSharedPreferences(query);
+                getHikes(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+
+        });
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
 
 
     private void getHikes(String city) {
@@ -73,13 +109,13 @@ public class HikesActivity extends AppCompatActivity {
             public void onResponse(Call call, Response response) {
                 mHikes = hikesService.processResults(response);
 
-                HikesActivity.this.runOnUiThread(new Runnable() {
+                HikeListActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         mAdapter = new HikeListAdapter(getApplicationContext(), mHikes);
                         mRecyclerView.setAdapter(mAdapter);
                         RecyclerView.LayoutManager layoutManager =
-                                new LinearLayoutManager(HikesActivity.this);
+                                new LinearLayoutManager(HikeListActivity.this);
                         mRecyclerView.setLayoutManager(layoutManager);
                         mRecyclerView.setHasFixedSize(true);
                     }
@@ -87,5 +123,11 @@ public class HikesActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void addToSharedPreferences(String city) {
+        mEditor.putString(Constants.PREFERENCES_CITY_KEY, city).apply();
+    }
 }
+
+
 

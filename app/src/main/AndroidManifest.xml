@@ -16,7 +16,7 @@
             android:theme="@style/NoActionBarTheme">
 
         </activity>
-        <activity android:name=".HikesActivity">
+        <activity android:name=".HikeListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.epicodus.my_hikes.MainActivity" />
