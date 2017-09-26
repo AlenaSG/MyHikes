@@ -30,10 +30,9 @@ public class HikeListActivity extends AppCompatActivity {
     private SharedPreferences.Editor mEditor;
     private String mRecentCity;
 
-    //@Bind(R.id.locationTextView) TextView mLocationTextView;
     @Bind(R.id.recyclerView) RecyclerView mRecyclerView;
-    private HikeListAdapter mAdapter;
 
+    private HikeListAdapter mAdapter;
     public ArrayList<Hike> mHikes = new ArrayList<>();
 
     @Override
@@ -44,8 +43,6 @@ public class HikeListActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String city = intent.getStringExtra("city");
-
-        //mLocationTextView.setText("Here are all the hikes near: " + city);
 
         getHikes(city);
 
@@ -110,6 +107,7 @@ public class HikeListActivity extends AppCompatActivity {
                 mHikes = hikesService.processResults(response);
 
                 HikeListActivity.this.runOnUiThread(new Runnable() {
+
                     @Override
                     public void run() {
                         mAdapter = new HikeListAdapter(getApplicationContext(), mHikes);
