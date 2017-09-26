@@ -14,11 +14,7 @@
         <activity
             android:name=".MainActivity"
             android:theme="@style/NoActionBarTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".HikesActivity">
             <meta-data
@@ -27,7 +23,15 @@
         </activity>
         <activity android:name=".AboutUsActivity" />
         <activity android:name=".HikeDetailActivity" />
-        <activity android:name=".SavedHikeListActivity"></activity>
+        <activity android:name=".SavedHikeListActivity" />
+        <activity android:name=".CreateAccountActivity" />
+        <activity android:name=".LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
