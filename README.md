@@ -5,6 +5,10 @@ by Alena Golovina, 09/08/2017
 
 It's an Android app using API calls and Firebase database to track hikes in Washington State by location/city.
 
+## Screenshot
+<img src="https://github.com/AlenaSG/MyHikes/blob/master/screenshots/main_activity.png" alt="Mainpage" width= "200px"/>
+
+
 ## Technologies Used
 
 * Android Studio
