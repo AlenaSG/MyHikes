@@ -12,6 +12,7 @@ public class Hike {
 //    private ArrayList<Activity> mActivities;
 //    private double mLat;
 //    private double mLon;
+    private String pushId;
 
     public Hike() {
 
@@ -48,4 +49,11 @@ public class Hike {
 //        return mLon;
 //    }
 
+    public String getPushId() {
+        return pushId;
+    }
+
+    public void setPushId(String pushId) {
+        this.pushId = pushId;
+    }
 }

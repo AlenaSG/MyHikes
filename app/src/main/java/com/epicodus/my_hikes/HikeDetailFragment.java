@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -61,10 +63,16 @@ public class HikeDetailFragment extends Fragment implements View.OnClickListener
     public void onClick(View v) {
 
         if (v == mSaveHikeButton) {
-            DatabaseReference restaurantRef = FirebaseDatabase
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            String uid = user.getUid();
+            DatabaseReference hikeRef = FirebaseDatabase
                     .getInstance()
-                    .getReference(Constants.FIREBASE_CHILD_HIKES);
-            restaurantRef.push().setValue(mHike);
+                    .getReference(Constants.FIREBASE_CHILD_HIKES).child(uid);
+            DatabaseReference pushRef = hikeRef.push();
+            String pushId = pushRef.getKey();
+            mHike.setPushId(pushId);
+            pushRef.setValue(mHike);
+
             Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
         }
     }
