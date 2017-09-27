@@ -107,6 +107,7 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
                         mAuthProgressDialog.dismiss();
 
                         if (task.isSuccessful()) {
+                            createFirebaseUserProfile(task.getResult().getUser());
                             Log.d(TAG, "Authentication successful");
                         } else {
                             Toast.makeText(CreateAccountActivity.this, "Authentication failed.",
