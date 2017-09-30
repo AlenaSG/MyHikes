@@ -44,9 +44,9 @@ public class HikeListAdapter extends RecyclerView.Adapter<HikeListAdapter.HikeVi
 
     public class HikeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        @Bind(R.id.hikeNameTextView)
-        TextView mNameTextView;
+        @Bind(R.id.hikeNameTextView) TextView mNameTextView;
         @Bind(R.id.directionsTextView) TextView mDirectionsTextView;
+
         private Context mContext;
 
         public HikeViewHolder(View itemView) {
@@ -55,18 +55,20 @@ public class HikeListAdapter extends RecyclerView.Adapter<HikeListAdapter.HikeVi
             mContext = itemView.getContext();
             itemView.setOnClickListener(this);
         }
-        @Override
-        public void onClick(View v) {
-            int itemPosition = getLayoutPosition();
-            Intent intent = new Intent(mContext, HikeDetailActivity.class);
-            intent.putExtra("position", itemPosition);
-            intent.putExtra("hikes", Parcels.wrap(mHikes));
-            mContext.startActivity(intent);
-        }
 
         public void bindHike(Hike hike) {
             mNameTextView.setText(hike.getName());
             mDirectionsTextView.setText(hike.getDirections());
         }
+
+        @Override
+        public void onClick(View v) {
+            int itemPosition = getLayoutPosition();
+            Intent intent = new Intent(mContext, HikeDetailActivity.class);
+            intent.putExtra("position", itemPosition + "");
+            intent.putExtra("hikes", Parcels.wrap(mHikes));
+            mContext.startActivity(intent);
+        }
+
     }
 }

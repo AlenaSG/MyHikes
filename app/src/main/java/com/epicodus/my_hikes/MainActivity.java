@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mFindHikesButton.setOnClickListener(this);
         mSavedHikesButton.setOnClickListener(this);
+        mAboutButton.setOnClickListener(this);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -62,14 +63,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         };
-
-        mAboutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, AboutUsActivity.class);
-                startActivity(intent);
-            }
-        });
 
     }//end of onCreate
 
@@ -87,7 +80,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 mAuth.removeAuthStateListener(mAuthListener);
             }
         }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -135,11 +127,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         }
         if(v == mFindHikesButton) {
-
             Intent intent = new Intent(MainActivity.this, HikeListActivity.class);
             //intent.putExtra("city", city);
+            startActivity(intent);
+        }
+        if(v == mAboutButton) {
+            Intent intent = new Intent(MainActivity.this, AboutUsActivity.class);
             startActivity(intent);
         }
     }
 
 }
+

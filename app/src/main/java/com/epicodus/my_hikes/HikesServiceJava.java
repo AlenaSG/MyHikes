@@ -60,15 +60,15 @@ public class HikesServiceJava {
                     double lat = hikeJSON.getDouble("lat");
                     double lon = hikeJSON.getDouble("lon");
 
-                    JSONArray activitiesJSON = hikeJSON.getJSONArray("activities");
-                    ArrayList<Activity> activities = new ArrayList<Activity>();
-                    for (int j = 0; j < activitiesJSON.length(); j++) {
-                        JSONObject activityJSON = activitiesJSON.getJSONObject(j);
-                        double length = activityJSON.getDouble("length");
-                        String url = activityJSON.getString("url");
-                        String description = activityJSON.getString("description");
-                        activities.add(new Activity(description, url, length));
-                    }
+//                    JSONArray activitiesJSON = hikeJSON.getJSONArray("activities");
+//                    ArrayList<Activity> activities = new ArrayList<Activity>();
+//                    for (int j = 0; j < activitiesJSON.length(); j++) {
+//                        JSONObject activityJSON = activitiesJSON.getJSONObject(j);
+//                        double length = activityJSON.getDouble("length");
+//                        String url = activityJSON.getString("url");
+//                        String description = activityJSON.getString("description");
+//                        activities.add(new Activity(description, url, length));
+
 
                     Hike hike = new Hike(name, directions);
                     hikes.add(hike);

@@ -24,7 +24,7 @@ public class HikeDetailActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         mHikes = Parcels.unwrap(getIntent().getParcelableExtra("hikes"));
-        int startingPosition = getIntent().getIntExtra("position", 0);
+        int startingPosition = Integer.parseInt(getIntent().getStringExtra("position"));
 
         adapterViewPager = new HikePagerAdapter(getSupportFragmentManager(), mHikes);
         mViewPager.setAdapter(adapterViewPager);
