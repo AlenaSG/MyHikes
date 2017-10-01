@@ -12,8 +12,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class HikeDetailActivity extends AppCompatActivity {
-    @Bind(R.id.viewPager)
-    ViewPager mViewPager;
+    @Bind(R.id.viewPager) ViewPager mViewPager;
     private HikePagerAdapter adapterViewPager;
     ArrayList<Hike> mHikes = new ArrayList<>();
 

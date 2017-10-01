@@ -40,7 +40,7 @@ public class SavedHikeListActivity extends AppCompatActivity {
 
     private void setUpFirebaseAdapter() {
         mFirebaseAdapter = new FirebaseRecyclerAdapter<Hike, FirebaseHikeViewHolder>
-                (Hike.class, R.layout.hike_list_item, FirebaseHikeViewHolder.class,
+                (Hike.class, R.layout.hike_list_item_drag, FirebaseHikeViewHolder.class,
                         mHikeReference) {
 
             @Override

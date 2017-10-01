@@ -65,9 +65,12 @@ public class HikeDetailFragment extends Fragment implements View.OnClickListener
         if (v == mSaveHikeButton) {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             String uid = user.getUid();
+
             DatabaseReference hikeRef = FirebaseDatabase
                     .getInstance()
-                    .getReference(Constants.FIREBASE_CHILD_HIKES).child(uid);
+                    .getReference(Constants.FIREBASE_CHILD_HIKES)
+                    .child(uid);
+
             DatabaseReference pushRef = hikeRef.push();
             String pushId = pushRef.getKey();
             mHike.setPushId(pushId);

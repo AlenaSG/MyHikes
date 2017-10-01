@@ -2,6 +2,10 @@ package com.epicodus.my_hikes;
 
 import android.util.Log;
 
+
+import com.epicodus.my_hikes.Constants;
+import com.epicodus.my_hikes.Hike;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,6 +37,8 @@ public class HikesServiceJava {
         HttpUrl.Builder urlBuilder = HttpUrl.parse(Constants.HIKES_BASE_URL).newBuilder();
         urlBuilder.addQueryParameter("q[city_cont]", city);
         String url = urlBuilder.build().toString();
+
+
         Log.v(TAG, "Request URL: " + url);
 
         Request request = new Request.Builder()

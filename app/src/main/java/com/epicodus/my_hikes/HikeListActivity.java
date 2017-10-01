@@ -44,7 +44,7 @@ public class HikeListActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String city = intent.getStringExtra("city");
 
-        getHikes(city);
+       // getHikes(city);
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mRecentCity = mSharedPreferences.getString(Constants.PREFERENCES_CITY_KEY, null);
@@ -53,7 +53,6 @@ public class HikeListActivity extends AppCompatActivity {
             getHikes(mRecentCity);
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -65,7 +64,7 @@ public class HikeListActivity extends AppCompatActivity {
         mEditor = mSharedPreferences.edit();
 
         MenuItem menuItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+        SearchView searchView = (SearchView) menuItem.getActionView();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
