@@ -16,7 +16,7 @@ import org.parceler.Parcels;
 
 import java.util.ArrayList;
 
-public class FirebaseHikeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+public class FirebaseHikeViewHolder extends RecyclerView.ViewHolder {
 
     View mView;
     Context mContext;
@@ -27,7 +27,6 @@ public class FirebaseHikeViewHolder extends RecyclerView.ViewHolder implements V
         super(itemView);
         mView = itemView;
         mContext = itemView.getContext();
-        itemView.setOnClickListener(this);
     }
 
     public void bindHike(Hike hike) {
@@ -41,30 +40,30 @@ public class FirebaseHikeViewHolder extends RecyclerView.ViewHolder implements V
 
     }
 
-    @Override
-    public void onClick(View view) {
-        final ArrayList<Hike> hikes = new ArrayList<>();
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_CHILD_HIKES);
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    hikes.add(snapshot.getValue(Hike.class));
-                }
-
-                int itemPosition = getLayoutPosition();
-
-                Intent intent = new Intent(mContext, HikeDetailActivity.class);
-                intent.putExtra("position", itemPosition + "");
-                intent.putExtra("hikes", Parcels.wrap(hikes));
-
-                mContext.startActivity(intent);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-    }
+//    @Override
+//    public void onClick(View view) {
+//        final ArrayList<Hike> hikes = new ArrayList<>();
+//        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_CHILD_HIKES);
+//        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+//
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                    hikes.add(snapshot.getValue(Hike.class));
+//                }
+//
+//                int itemPosition = getLayoutPosition();
+//
+//                Intent intent = new Intent(mContext, HikeDetailActivity.class);
+//                intent.putExtra("position", itemPosition + "");
+//                intent.putExtra("hikes", Parcels.wrap(hikes));
+//
+//                mContext.startActivity(intent);
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//            }
+//        });
+//    }
 }

@@ -13,6 +13,7 @@ public class Hike {
 //    private double mLat;
 //    private double mLon;
     private String pushId;
+    String index;
 
     public Hike() {
 
@@ -26,6 +27,7 @@ public class Hike {
 //        this.mActivities = activities;
 //        this.mLat = lat;
 //        this.mLon = lon;
+        this.index = "not_specified";
     }
 
     public String getName() {
@@ -55,5 +57,13 @@ public class Hike {
 
     public void setPushId(String pushId) {
         this.pushId = pushId;
+    }
+
+    public String getIndex() {
+        return index;
+    }
+
+    public void setIndex(String index) {
+        this.index = index;
     }
 }
