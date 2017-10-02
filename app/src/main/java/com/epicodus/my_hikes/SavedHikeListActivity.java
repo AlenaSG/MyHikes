@@ -4,6 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.View;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -14,9 +16,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class SavedHikeListActivity extends AppCompatActivity {
+public class SavedHikeListActivity extends AppCompatActivity implements OnStartDragListener {
     private DatabaseReference mHikeReference;
-    private FirebaseRecyclerAdapter mFirebaseAdapter;
+    private FirebaseHikeListAdapter mFirebaseAdapter;
+    private ItemTouchHelper mItemTouchHelper;
 
     @Bind(R.id.recyclerView) RecyclerView mRecyclerView;
 
@@ -27,6 +30,10 @@ public class SavedHikeListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_hikes);
         ButterKnife.bind(this);
 
+        setUpFirebaseAdapter();
+    }
+
+    private void setUpFirebaseAdapter() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String uid = user.getUid();
 
@@ -35,28 +42,25 @@ public class SavedHikeListActivity extends AppCompatActivity {
                 .getReference(Constants.FIREBASE_CHILD_HIKES)
                 .child(uid);
 
-        setUpFirebaseAdapter();
-    }
+        mFirebaseAdapter = new FirebaseHikeListAdapter(Hike.class, R.layout.hike_list_item_drag, FirebaseHikeViewHolder.class, mHikeReference, this, this);
 
-    private void setUpFirebaseAdapter() {
-        mFirebaseAdapter = new FirebaseRecyclerAdapter<Hike, FirebaseHikeViewHolder>
-                (Hike.class, R.layout.hike_list_item_drag, FirebaseHikeViewHolder.class,
-                        mHikeReference) {
-
-            @Override
-            protected void populateViewHolder(FirebaseHikeViewHolder viewHolder,
-                                              Hike model, int position) {
-                viewHolder.bindHike(model);
-            }
-        };
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mFirebaseAdapter);
+
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(mFirebaseAdapter);
+        mItemTouchHelper = new ItemTouchHelper(callback);
+        mItemTouchHelper.attachToRecyclerView(mRecyclerView);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         mFirebaseAdapter.cleanup();
+    }
+
+    @Override
+    public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
+        mItemTouchHelper.startDrag(viewHolder);
     }
 }

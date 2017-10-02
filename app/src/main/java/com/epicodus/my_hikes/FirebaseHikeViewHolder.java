@@ -20,6 +20,8 @@ public class FirebaseHikeViewHolder extends RecyclerView.ViewHolder implements V
 
     View mView;
     Context mContext;
+    public TextView mHikeNameTextView;
+
 
     public FirebaseHikeViewHolder(View itemView) {
         super(itemView);
@@ -29,10 +31,12 @@ public class FirebaseHikeViewHolder extends RecyclerView.ViewHolder implements V
     }
 
     public void bindHike(Hike hike) {
-        TextView nameTextView = (TextView) mView.findViewById(R.id.hikeNameTextView);
+        mHikeNameTextView = (TextView) mView.findViewById(R.id.hikeNameTextView);
+
+        //TextView nameTextView = (TextView) mView.findViewById(R.id.hikeNameTextView);
         TextView directionsTextView = (TextView) mView.findViewById(R.id.directionsTextView);
 
-        nameTextView.setText(hike.getName());
+        mHikeNameTextView.setText(hike.getName());
         directionsTextView.setText(hike.getDirections());
 
     }
