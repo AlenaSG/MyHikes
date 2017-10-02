@@ -17,32 +17,39 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import org.parceler.Parcels;
 
+import java.util.ArrayList;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class HikeDetailFragment extends Fragment implements View.OnClickListener {
     @Bind(R.id.saveHikeButton) Button mSaveHikeButton;
     @Bind(R.id.hikeNameTextView) TextView mHikeNameTextView;
     @Bind(R.id.directionsTextView) TextView mDirectionsTextView;
 
     private Hike mHike;
+    private ArrayList<Hike> mHikes;
+    private int mPosition;
 
-    public static HikeDetailFragment newInstance(Hike hike) {
-       HikeDetailFragment hikeDetailFragment = new HikeDetailFragment();
+    public static HikeDetailFragment newInstance(ArrayList<Hike> hikes, Integer position) {
+        HikeDetailFragment hikeDetailFragment = new HikeDetailFragment();
         Bundle args = new Bundle();
-        args.putParcelable("hike", Parcels.wrap(hike));
-       hikeDetailFragment.setArguments(args);
+
+        args.putParcelable(Constants.EXTRA_KEY_HIKES, Parcels.wrap(hikes));
+        args.putInt(Constants.EXTRA_KEY_POSITION, position);
+
+
+        hikeDetailFragment.setArguments(args);
         return hikeDetailFragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mHike = Parcels.unwrap(getArguments().getParcelable("hike"));
+        mHikes = Parcels.unwrap(getArguments().getParcelable(Constants.EXTRA_KEY_HIKES));
+        mPosition = getArguments().getInt(Constants.EXTRA_KEY_POSITION);
+        mHike = mHikes.get(mPosition);
     }
 
     @Override

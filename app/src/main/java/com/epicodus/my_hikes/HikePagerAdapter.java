@@ -20,7 +20,7 @@ public class HikePagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return HikeDetailFragment.newInstance(mHikes.get(position));
+        return HikeDetailFragment.newInstance(mHikes, position);
     }
 
     @Override

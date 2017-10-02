@@ -3,6 +3,9 @@ package com.epicodus.my_hikes;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,11 +51,19 @@ public class HikeListAdapter extends RecyclerView.Adapter<HikeListAdapter.HikeVi
         @Bind(R.id.directionsTextView) TextView mDirectionsTextView;
 
         private Context mContext;
+        private int mOrientation;
 
         public HikeViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             mContext = itemView.getContext();
+
+            mOrientation = itemView.getResources().getConfiguration().orientation;
+
+            if (mOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+                createDetailFragment(0);
+            }
+
             itemView.setOnClickListener(this);
         }
 
@@ -64,10 +75,21 @@ public class HikeListAdapter extends RecyclerView.Adapter<HikeListAdapter.HikeVi
         @Override
         public void onClick(View v) {
             int itemPosition = getLayoutPosition();
-            Intent intent = new Intent(mContext, HikeDetailActivity.class);
-            intent.putExtra("position", itemPosition + "");
-            intent.putExtra("hikes", Parcels.wrap(mHikes));
-            mContext.startActivity(intent);
+            if (mOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+                createDetailFragment(itemPosition);
+            } else {
+                Intent intent = new Intent(mContext, HikeDetailActivity.class);
+                intent.putExtra(Constants.EXTRA_KEY_POSITION, itemPosition);
+                intent.putExtra(Constants.EXTRA_KEY_HIKES, Parcels.wrap(mHikes));
+                mContext.startActivity(intent);
+            }
+        }
+
+        private void createDetailFragment(int position) {
+           HikeDetailFragment detailFragment = HikeDetailFragment.newInstance(mHikes, position);
+           FragmentTransaction ft = ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction();
+           ft.replace(R.id.hikeDetailContainer, detailFragment);
+           ft.commit();
         }
 
     }

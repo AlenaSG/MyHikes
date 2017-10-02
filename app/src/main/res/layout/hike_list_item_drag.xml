@@ -31,7 +31,7 @@
             android:textStyle="italic" />
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/dragIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"

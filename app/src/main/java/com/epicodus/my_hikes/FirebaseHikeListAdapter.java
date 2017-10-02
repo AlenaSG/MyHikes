@@ -2,6 +2,9 @@ package com.epicodus.my_hikes;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MotionEventCompat;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,6 +25,7 @@ public class FirebaseHikeListAdapter extends FirebaseRecyclerAdapter<Hike, Fireb
     private DatabaseReference mRef;
     private OnStartDragListener mOnStartDragListener;
     private Context mContext;
+    private int mOrientation;
 
     private ChildEventListener mChildEventListener;
     private ArrayList<Hike> mHikes = new ArrayList<>();
@@ -66,6 +70,12 @@ public class FirebaseHikeListAdapter extends FirebaseRecyclerAdapter<Hike, Fireb
     @Override
     protected void populateViewHolder(final FirebaseHikeViewHolder viewHolder, Hike model, int position) {
         viewHolder.bindHike(model);
+
+        mOrientation = viewHolder.itemView.getResources().getConfiguration().orientation;
+        if (mOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+            createDetailFragment(0);
+        }
+
         viewHolder.mHikeNameTextView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -76,17 +86,30 @@ public class FirebaseHikeListAdapter extends FirebaseRecyclerAdapter<Hike, Fireb
             }
         });
 
+
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, HikeDetailActivity.class);
-                intent.putExtra("position", viewHolder.getAdapterPosition());
-                intent.putExtra("hikes", Parcels.wrap(mHikes));
-                mContext.startActivity(intent);
+                int itemPosition = viewHolder.getAdapterPosition();
+                if (mOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+                    createDetailFragment(itemPosition);
+                } else {
+                    Intent intent = new Intent(mContext, HikeDetailActivity.class);
+                    intent.putExtra(Constants.EXTRA_KEY_POSITION, itemPosition);
+                    intent.putExtra(Constants.EXTRA_KEY_HIKES, Parcels.wrap(mHikes));
+                    mContext.startActivity(intent);
+                }
             }
         });
 
+    }
+
+    private void createDetailFragment(int position) {
+        HikeDetailFragment detailFragment = HikeDetailFragment.newInstance(mHikes, position);
+        FragmentTransaction ft = ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.hikeDetailContainer, detailFragment);
+        ft.commit();
     }
 
 
