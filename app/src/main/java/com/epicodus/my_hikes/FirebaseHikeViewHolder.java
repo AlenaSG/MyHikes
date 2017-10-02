@@ -3,6 +3,7 @@ package com.epicodus.my_hikes;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -16,7 +17,7 @@ import org.parceler.Parcels;
 
 import java.util.ArrayList;
 
-public class FirebaseHikeViewHolder extends RecyclerView.ViewHolder {
+public class FirebaseHikeViewHolder extends RecyclerView.ViewHolder implements ItemTouchHelperViewHolder {
 
     View mView;
     Context mContext;
@@ -40,30 +41,21 @@ public class FirebaseHikeViewHolder extends RecyclerView.ViewHolder {
 
     }
 
-//    @Override
-//    public void onClick(View view) {
-//        final ArrayList<Hike> hikes = new ArrayList<>();
-//        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_CHILD_HIKES);
-//        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-//
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                    hikes.add(snapshot.getValue(Hike.class));
-//                }
-//
-//                int itemPosition = getLayoutPosition();
-//
-//                Intent intent = new Intent(mContext, HikeDetailActivity.class);
-//                intent.putExtra("position", itemPosition + "");
-//                intent.putExtra("hikes", Parcels.wrap(hikes));
-//
-//                mContext.startActivity(intent);
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//            }
-//        });
-//    }
+
+    @Override
+    public void onItemSelected() {
+        itemView.animate()
+                .alpha(0.7f)
+                .scaleX(0.9f)
+                .scaleY(0.9f)
+                .setDuration(500);
+    }
+
+    @Override
+    public void onItemClear() {
+        itemView.animate()
+                .alpha(1f)
+                .scaleX(1f)
+                .scaleY(1f);
+    }
 }
