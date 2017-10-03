@@ -22,16 +22,18 @@ import butterknife.ButterKnife;
 public class HikeListAdapter extends RecyclerView.Adapter<HikeListAdapter.HikeViewHolder> {
     private ArrayList<Hike> mHikes = new ArrayList<>();
     private Context mContext;
+    private OnHikeSelectedListener mOnHikeSelectedListener;
 
-    public HikeListAdapter(Context context, ArrayList<Hike> hikes) {
+    public HikeListAdapter(Context context, ArrayList<Hike> hikes, OnHikeSelectedListener hikeSelectedListener) {
         mContext = context;
         mHikes = hikes;
+        mOnHikeSelectedListener = hikeSelectedListener;
     }
 
     @Override
     public HikeListAdapter.HikeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.hike_list_item, parent, false);
-        HikeViewHolder viewHolder = new HikeViewHolder(view);
+        HikeViewHolder viewHolder = new HikeViewHolder(view, mHikes, mOnHikeSelectedListener);
         return viewHolder;
     }
 
@@ -53,12 +55,18 @@ public class HikeListAdapter extends RecyclerView.Adapter<HikeListAdapter.HikeVi
         private Context mContext;
         private int mOrientation;
 
-        public HikeViewHolder(View itemView) {
+        private ArrayList<Hike> mHikes = new ArrayList<>();
+        private OnHikeSelectedListener mHikeSelectedListener;
+
+        public HikeViewHolder(View itemView, ArrayList<Hike> hikes, OnHikeSelectedListener hikeSelectedListener) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            mContext = itemView.getContext();
 
+            mContext = itemView.getContext();
             mOrientation = itemView.getResources().getConfiguration().orientation;
+
+            mHikes = hikes;
+            mHikeSelectedListener = hikeSelectedListener;
 
             if (mOrientation == Configuration.ORIENTATION_LANDSCAPE) {
                 createDetailFragment(0);
@@ -75,6 +83,9 @@ public class HikeListAdapter extends RecyclerView.Adapter<HikeListAdapter.HikeVi
         @Override
         public void onClick(View v) {
             int itemPosition = getLayoutPosition();
+
+            mHikeSelectedListener.onHikeSelected(itemPosition, mHikes);
+
             if (mOrientation == Configuration.ORIENTATION_LANDSCAPE) {
                 createDetailFragment(itemPosition);
             } else {

@@ -102,6 +102,19 @@ public class HikeListFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
+    private OnHikeSelectedListener mOnHikeSelectedListener;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            mOnHikeSelectedListener = (OnHikeSelectedListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + e.getMessage());
+        }
+    }
+
+
     private void getHikes(String city) {
         final HikesServiceJava hikesService = new HikesServiceJava();
 
@@ -120,7 +133,7 @@ public class HikeListFragment extends Fragment {
 
                     @Override
                     public void run() {
-                        mAdapter = new HikeListAdapter(getActivity(), mHikes);
+                        mAdapter = new HikeListAdapter(getActivity(), mHikes, mOnHikeSelectedListener);
                         mRecyclerView.setAdapter(mAdapter);
                         RecyclerView.LayoutManager layoutManager =
                                 new LinearLayoutManager(getActivity());
